@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "883688592469",
+    "project_id": "gnvs-beta",
+    "storage_bucket": "gnvs-beta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883688592469:android:88e007dca609c56cb430dc",
+        "android_client_info": {
+          "package_name": "com.example.mymessage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883688592469-nut842kg7vleduv9be9queej9g6kgli4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo8L9pljTA75VPnfRxaVW9F6MTXNgEavA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883688592469-nut842kg7vleduv9be9queej9g6kgli4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
