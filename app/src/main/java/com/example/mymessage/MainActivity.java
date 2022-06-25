@@ -3,6 +3,7 @@ package com.example.mymessage;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         mMessageRecycler.setAdapter(mMessageAdapter);
         //addData();
         queryData();
+        mMessageRecycler.scrollToPosition(messageList.size());
     }
 
     public void queryData(){
@@ -71,8 +74,11 @@ public class MainActivity extends AppCompatActivity {
                     MessageList m = dataSnapshot.getValue(MessageList.class);
                     Log.i("Display",m.getMessageText());
                     messageList.add(m);
+
+                    Log.i("Size", Integer.toString(messageList.size()));
                 }
-                mMessageAdapter.notifyDataSetChanged();
+                mMessageAdapter.notifyItemInserted(messageList.size()-1);
+                mMessageRecycler.scrollToPosition(messageList.size()-1);
             }
 
             @Override
@@ -96,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
                     MessageList newMessage = snapshot.getValue(MessageList.class);
                     //Log.i("Flow", newMessage.getMessageText());
                     messageList.add(newMessage);
+                    mMessageAdapter.notifyItemInserted(messageList.size()-1);
                     Log.i("Size", Integer.toString(messageList.size()));
                 }
-                mMessageAdapter.notifyDataSetChanged();
                 //mMessageRecycler.setLayoutManager(new LinearLayoutManager(this))
 
                 // This method is called once with the initial value and again
@@ -115,10 +121,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(){
         String newMessage = messageText.getText().toString();
+        messageText.setText("");
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm:ss");
         String strDate = mdformat.format(calendar.getTime());
-        MessageList mMessage = new MessageList(newMessage, currentUser.getEmail(), strDate, 1);
+        MessageList mMessage = new MessageList(newMessage, currentUser.getEmail(), strDate);
         FirebaseDatabase database =  FirebaseDatabase.getInstance();
         DatabaseReference mRef = database.getReference().child("messages").push();
         mRef.setValue(mMessage);

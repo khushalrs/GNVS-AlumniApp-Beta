@@ -1,7 +1,6 @@
 package com.example.mymessage;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +9,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class MessageAdapter extends RecyclerView.Adapter {
     private static final int MESSAGE_SENT = 1;
     private static final int MESSAGE_RECEIVED = 2;
     private Context mContext;
     private ArrayList<MessageList> mMessage;
+    String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
     @Override
     public int getItemViewType(int position){
-        return mMessage.get(position).getType();
+        if (Objects.equals(mMessage.get(position).getName(), email)){
+            return 1;
+        }
+        else {
+            return 2;
+        }
     }
 
     public MessageAdapter(Context context, ArrayList<MessageList> list){
@@ -35,7 +42,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        if (viewType == MESSAGE_SENT){
+        if (viewType == 1){
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_message, parent, false);
             return new SentMessageHolder(view);
         }
@@ -48,7 +55,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MessageList message = mMessage.get(position);
-        Log.i("Adapter", Integer.toString(holder.getItemViewType()));
+        //Log.i("Adapter", Integer.toString(holder.getItemViewType()));
         switch (holder.getItemViewType()) {
             case MESSAGE_SENT:
                 ((SentMessageHolder) holder).bind(message);
