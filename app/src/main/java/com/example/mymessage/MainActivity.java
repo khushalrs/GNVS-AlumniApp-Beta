@@ -14,10 +14,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<MessageList> messageList;
     Button mSend;
     EditText messageText;
+    FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         mSend = findViewById(R.id.button_gchat_send);
         messageText = findViewById(R.id.edit_gchat_message);
         mMessageRecycler = findViewById(R.id.recycler_gchat);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         mSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,7 +55,31 @@ public class MainActivity extends AppCompatActivity {
         mMessageAdapter = new MessageAdapter(this, messageList);
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
         mMessageRecycler.setAdapter(mMessageAdapter);
-        addData();
+        //addData();
+        queryData();
+    }
+
+    public void queryData(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference().child("messages");
+        Query q = ref.orderByChild("time");
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                messageList.clear();
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    MessageList m = dataSnapshot.getValue(MessageList.class);
+                    Log.i("Display",m.getMessageText());
+                    messageList.add(m);
+                }
+                mMessageAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void addData(){
@@ -87,11 +116,11 @@ public class MainActivity extends AppCompatActivity {
     public void sendMessage(){
         String newMessage = messageText.getText().toString();
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm:ss");
         String strDate = mdformat.format(calendar.getTime());
-        MessageList mMessage = new MessageList(newMessage, "User3", strDate, 1);
+        MessageList mMessage = new MessageList(newMessage, currentUser.getEmail(), strDate, 1);
         FirebaseDatabase database =  FirebaseDatabase.getInstance();
-        DatabaseReference mRef = database.getReference().child("messages").child("message 9");
+        DatabaseReference mRef = database.getReference().child("messages").push();
         mRef.setValue(mMessage);
     }
 }
