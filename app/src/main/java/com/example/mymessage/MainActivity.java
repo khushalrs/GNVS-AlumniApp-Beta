@@ -1,23 +1,21 @@
 package com.example.mymessage;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,60 +23,66 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView mMessageRecycler;
-    private MessageAdapter mMessageAdapter;
-    ArrayList<MessageList> messageList;
-    Button mSend;
-    EditText messageText;
-    FirebaseUser currentUser;
-
+    RecyclerView chats;
+    ChatAdapter mChatAdapter;
+    ArrayList<String> userList, keyList, nameList;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference users = database.getReference().child("users");
+    ItemClickListener itemClickListener;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        messageList = new ArrayList<>();
-        setContentView(R.layout.activity_main);
-        mSend = findViewById(R.id.button_gchat_send);
-        messageText = findViewById(R.id.edit_gchat_message);
-        mMessageRecycler = findViewById(R.id.recycler_gchat);
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        mSend.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_chat);
+        keyList = new ArrayList<>();
+        nameList = new ArrayList<>();
+        userList = new ArrayList<>();
+        FloatingActionButton newChat = findViewById(R.id.newChat);
+        sharedPreferences = getSharedPreferences("ThisUser", Context.MODE_PRIVATE);
+        newChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendMessage();
+                searchContacts();
             }
         });
-        mMessageAdapter = new MessageAdapter(this, messageList);
-        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mMessageRecycler.setAdapter(mMessageAdapter);
-        //addData();
-        queryData();
-        mMessageRecycler.scrollToPosition(messageList.size());
+        itemClickListener = new ItemClickListener() {
+            @Override
+            public void onClick(int position, String value) {
+                Intent i = new Intent(MainActivity.this, ChatActivity.class);
+                i.putExtra("key", keyList.get(position));
+                i.putExtra("user", userList.get(position));
+                i.putExtra("name", nameList.get(position));
+                startActivity(i);
+            }
+        };
+        chats = findViewById(R.id.chatRecycler);
+        mChatAdapter = new ChatAdapter(this, nameList, itemClickListener);
+        chats.setLayoutManager(new LinearLayoutManager(this));
+        chats.setAdapter(mChatAdapter);
+        addUser();
     }
 
-    public void queryData(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference().child("messages");
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    public void addUser(){
+        DatabaseReference ref = users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("messages");
         Query q = ref.orderByChild("time");
-        q.addValueEventListener(new ValueEventListener() {
+        q.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                messageList.clear();
-                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                    MessageList m = dataSnapshot.getValue(MessageList.class);
-                    Log.i("Display",m.getMessageText());
-                    messageList.add(m);
-
-                    Log.i("Size", Integer.toString(messageList.size()));
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    //Log.i("Key",dataSnapshot.getKey());
+                    keyList.add(dataSnapshot.getKey());
                 }
-                mMessageAdapter.notifyItemInserted(messageList.size()-1);
-                mMessageRecycler.scrollToPosition(messageList.size()-1);
+                decode();
             }
 
             @Override
@@ -88,46 +92,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void addData(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Log.i("Flow","addData function");
-        DatabaseReference myRef = database.getReference().child("messages");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                messageList.clear();
-                //Log.i("Flow", Long.toString(dataSnapshot.getChildrenCount()));
-                for(DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    //Log.i("Flow", Long.toString(snapshot.getChildrenCount()));
-                    MessageList newMessage = snapshot.getValue(MessageList.class);
-                    //Log.i("Flow", newMessage.getMessageText());
-                    messageList.add(newMessage);
-                    mMessageAdapter.notifyItemInserted(messageList.size()-1);
-                    Log.i("Size", Integer.toString(messageList.size()));
-                }
-                //mMessageRecycler.setLayoutManager(new LinearLayoutManager(this))
-
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+    public void decode(){
+        for(String key:keyList){
+            String[] s = key.split(":");
+            nameList.add(s[0]);
+            userList.add(s[1]);
+        }
+        mChatAdapter.notifyDataSetChanged();
     }
 
-    public void sendMessage(){
-        String newMessage = messageText.getText().toString();
-        messageText.setText("");
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm:ss");
-        String strDate = mdformat.format(calendar.getTime());
-        MessageList mMessage = new MessageList(newMessage, currentUser.getEmail(), strDate);
-        FirebaseDatabase database =  FirebaseDatabase.getInstance();
-        DatabaseReference mRef = database.getReference().child("messages").push();
-        mRef.setValue(mMessage);
+    public void searchContacts(){
+
     }
 }

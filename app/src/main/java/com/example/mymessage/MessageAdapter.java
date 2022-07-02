@@ -23,7 +23,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position){
-        if (Objects.equals(mMessage.get(position).getName(), email)){
+        if (Objects.equals(mMessage.get(position).getEmail(), email)){
             return 1;
         }
         else {
@@ -91,7 +91,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
             //Log.i("Message", message.getMessageText());
             messageText.setText(message.getMessageText());
             timeText.setText((message.getTime()));
-            nameText.setText(message.getName());
+            nameText.setText(message.getEmail());
         }
     }
 

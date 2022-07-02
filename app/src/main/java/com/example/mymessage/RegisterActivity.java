@@ -20,8 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText emailTextView, passwordTextView;
-    private Button Btn;
+    private EditText emailEdit, passwordEdit, nameEdit, companyEdit, jobEdit, batchEdit;
     private FirebaseAuth mAuth;
 
     @Override
@@ -30,10 +29,14 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
-        emailTextView = findViewById(R.id.email_edit);
-        passwordTextView = findViewById(R.id.password_edit);
-        Btn = findViewById(R.id.btnregister);
-        Btn.setOnClickListener(new View.OnClickListener() {
+        emailEdit = findViewById(R.id.email_edit);
+        passwordEdit = findViewById(R.id.password_edit);
+        nameEdit = findViewById(R.id.name_edit);
+        companyEdit = findViewById(R.id.company_edit);
+        jobEdit = findViewById(R.id.job_edit);
+        batchEdit = findViewById(R.id.batch_edit);
+        Button btn = findViewById(R.id.btnregister);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -44,9 +47,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerNewUser()
     {
-        String email, password;
-        email = emailTextView.getText().toString();
-        password = passwordTextView.getText().toString();
+        String email, password, name, job, company, batch;
+        email = emailEdit.getText().toString();
+        password = passwordEdit.getText().toString();
+        name = nameEdit.getText().toString();
+        job = jobEdit.getText().toString();
+        company = companyEdit.getText().toString();
+        batch = batchEdit.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(),"Please enter email!!", Toast.LENGTH_LONG).show();
@@ -56,6 +63,22 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please enter password!!", Toast.LENGTH_LONG).show();
             return;
         }
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(getApplicationContext(),"Please enter name!!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (TextUtils.isEmpty(job)) {
+            Toast.makeText(getApplicationContext(),"Please enter job title!!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (TextUtils.isEmpty(company)) {
+            Toast.makeText(getApplicationContext(),"Please enter company name!!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (TextUtils.isEmpty(batch)) {
+            Toast.makeText(getApplicationContext(),"Please enter batch!!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -63,10 +86,9 @@ public class RegisterActivity extends AppCompatActivity {
             {
                 if (task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").push();
-                    User newUser = new User(email, password);
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
+                    User newUser = new User(email, password, name, job, company, batch);
                     ref.setValue(newUser);
-
                     Intent intent = new Intent(RegisterActivity.this, SignInActivity.class);
                     startActivity(intent);
                 }
