@@ -83,7 +83,7 @@ public class SignInActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     GetName();
                     Toast.makeText(getApplicationContext(), "Login successful!!", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SignInActivity.this, MainActivity2.class);
                     startActivity(intent);
                 }
 

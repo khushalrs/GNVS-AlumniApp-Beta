@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if(currentUser!=null){
-                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                    Intent i = new Intent(SplashActivity.this, MainActivity2.class);
                     i.putExtra("User", currentUser);
                     startActivity(i);
                     finish();

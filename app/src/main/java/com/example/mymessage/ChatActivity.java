@@ -1,14 +1,10 @@
 package com.example.mymessage;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,11 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class ChatActivity extends AppCompatActivity {
@@ -55,9 +48,14 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         messageList = new ArrayList<>();
         Intent i = getIntent();
-        key = i.getStringExtra("key");
-        id = i.getStringExtra("user");
-        user = i.getStringExtra("name");
+        if(i.hasExtra("key")){
+        key = i.getStringExtra("key");}
+        if(i.hasExtra("user")){
+        id = i.getStringExtra("user");}
+        if(i.hasExtra("name")){
+        user = i.getStringExtra("name");}
+        key = user + ":" + id;
+        Log.i("Key", key);
         setContentView(R.layout.activity_main);
         calendar = Calendar.getInstance();
         database =  FirebaseDatabase.getInstance();
@@ -111,7 +109,7 @@ public class ChatActivity extends AppCompatActivity {
     public void sendMessage(){
         String newMessage = messageText.getText().toString();
         messageText.setText("");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         String strTime = timeFormat.format(calendar.getTime());
         String strDate = new SimpleDateFormat("MMM d", Locale.getDefault()).format(new Date());
         String dateTime = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault()).format(new Date());

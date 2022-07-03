@@ -8,11 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,11 +64,6 @@ public class MainActivity extends AppCompatActivity {
         addUser();
     }
 
-    @Override
-    public void onBackPressed() {
-
-    }
-
     public void addUser(){
         DatabaseReference ref = users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("messages");
         Query q = ref.orderByChild("time");
@@ -102,6 +94,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void searchContacts(){
-
+        startActivity(new Intent(MainActivity.this, SearchActivity.class));
     }
 }
