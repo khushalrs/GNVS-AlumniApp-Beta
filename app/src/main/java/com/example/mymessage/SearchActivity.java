@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -89,7 +90,7 @@ public class SearchActivity extends AppCompatActivity {
                 for(DataSnapshot snap:dataList){
                     for(DataSnapshot s:snap.getChildren()){
                         if(Objects.equals(s.getKey(), "name")){
-                            if(Objects.equals(s.getValue(String.class), nameList.get(i))){
+                            if(Objects.equals(s.getValue(String.class), adapterView.getItemAtPosition(i))){
                                 Intent intent = new Intent(SearchActivity.this, ChatActivity.class);
                                 intent.putExtra("user", snap.getKey());
                                 intent.putExtra("name", s.getValue(String.class));

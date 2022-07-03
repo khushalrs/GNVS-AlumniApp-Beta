@@ -55,7 +55,6 @@ public class ChatActivity extends AppCompatActivity {
         if(i.hasExtra("name")){
         user = i.getStringExtra("name");}
         key = user + ":" + id;
-        Log.i("Key", key);
         setContentView(R.layout.activity_main);
         calendar = Calendar.getInstance();
         database =  FirebaseDatabase.getInstance();
