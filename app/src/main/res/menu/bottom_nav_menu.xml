@@ -3,9 +3,15 @@
     <item android:title="Home"
         android:icon="@drawable/ic_baseline_home_24"
         android:id="@+id/home"/>
+    <item android:title="Events"
+        android:icon="@drawable/ic_baseline_event_24"
+        android:id="@+id/Events"/>
     <item android:title="New Post"
         android:icon="@drawable/ic_baseline_add_circle_outline_24"
         android:id="@+id/NewPost"/>
+    <item android:title="Batch Filter"
+        android:icon="@drawable/ic_baseline_filter_list_24"
+        android:id="@+id/BatchFilter"/>
     <item android:title="Profile"
         android:icon="@drawable/ic_baseline_person_24"
         android:id="@+id/Person"/>

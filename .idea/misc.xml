@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable-v24/ic_baseline_event_24.xml" value="0.1" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable-v24/ic_baseline_filter_list_24.xml" value="0.1" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1695" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/bottom_nav_color.xml" value="0.1695" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_add_circle_outline_24.xml" value="0.1695" />
@@ -17,6 +19,8 @@
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/activity_signin.xml" value="0.3512064343163539" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/chat_list.xml" value="0.2" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_batch__filter.xml" value="0.12777777777777777" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_events.xml" value="0.12777777777777777" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_new_post.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_search.xml" value="0.25" />

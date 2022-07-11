@@ -45,9 +45,17 @@ public class MainActivity2 extends AppCompatActivity {
                         Log.i("Case","Home");
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new HomeFragment()).commit();
                         break;
+                    case R.id.Events:
+                        Log.i("Case","Events");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new EventsFragment()).commit();
+                        break;
                     case R.id.NewPost:
                         Log.i("Case","NewPost");
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new NewPostFragment()).commit();
+                        break;
+                    case R.id.BatchFilter:
+                        Log.i("Case","Batch Filter");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new Batch_FilterFragment()).commit();
                         break;
                     case R.id.Person:
                         Log.i("Case","Person");
