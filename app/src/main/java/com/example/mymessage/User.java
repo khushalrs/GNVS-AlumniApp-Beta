@@ -7,14 +7,16 @@ public class User {
     private final String job;
     private final String company;
     private final String batch;
+    private final String phone;
 
-    public User(String email, String password, String name, String job, String company, String batch) {
+    public User(String email, String password, String name, String job, String company, String batch, String phone) {
         this.email = email;
         this.password = password;
         this.batch = batch;
         this.name = name;
         this.job = job;
         this.company = company;
+        this.phone = phone;
     }
 
     public String getEmail(){
@@ -34,6 +36,9 @@ public class User {
     }
     public String getBatch(){
         return batch;
+    }
+    public String getPhone(){
+        return phone;
     }
 
 }

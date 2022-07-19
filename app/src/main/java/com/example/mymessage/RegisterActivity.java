@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText emailEdit, passwordEdit, nameEdit, companyEdit, jobEdit, batchEdit;
+    private EditText emailEdit, passwordEdit, nameEdit, companyEdit, jobEdit, batchEdit, phoneEdit;
     private FirebaseAuth mAuth;
 
     @Override
@@ -35,25 +35,18 @@ public class RegisterActivity extends AppCompatActivity {
         companyEdit = findViewById(R.id.company_edit);
         jobEdit = findViewById(R.id.job_edit);
         batchEdit = findViewById(R.id.batch_edit);
-        Button btn = findViewById(R.id.btnregister);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                registerNewUser();
-            }
-        });
+        phoneEdit = findViewById(R.id.phone_edit);
     }
 
-    private void registerNewUser()
-    {
-        String email, password, name, job, company, batch;
+    public void registerNewUser(View view) {
+        String email, password, name, job, company, batch, phone;
         email = emailEdit.getText().toString();
         password = passwordEdit.getText().toString();
         name = nameEdit.getText().toString();
         job = jobEdit.getText().toString();
         company = companyEdit.getText().toString();
         batch = batchEdit.getText().toString();
+        phone = phoneEdit.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(),"Please enter email!!", Toast.LENGTH_LONG).show();
@@ -79,6 +72,10 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Please enter batch!!", Toast.LENGTH_LONG).show();
             return;
         }
+        if (TextUtils.isEmpty(phone)) {
+            Toast.makeText(getApplicationContext(),"Please enter phone number!!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -87,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
-                    User newUser = new User(email, password, name, job, company, batch);
+                    User newUser = new User(email, password, name, job, company, batch, phone);
                     ref.setValue(newUser);
                     Intent intent = new Intent(RegisterActivity.this, SignInActivity.class);
                     startActivity(intent);

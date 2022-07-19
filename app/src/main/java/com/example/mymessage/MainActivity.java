@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    //Log.i("Key",dataSnapshot.getKey());
                     keyList.add(dataSnapshot.getKey());
                 }
                 decode();
