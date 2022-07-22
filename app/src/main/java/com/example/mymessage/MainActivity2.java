@@ -51,7 +51,8 @@ public class MainActivity2 extends AppCompatActivity {
                         break;
                     case R.id.NewPost:
                         Log.i("Case","NewPost");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new NewPostFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up)
+                                .replace(R.id.frame_layout, new NewPostFragment()).commit();
                         break;
                     case R.id.BatchFilter:
                         Log.i("Case","Batch Filter");
