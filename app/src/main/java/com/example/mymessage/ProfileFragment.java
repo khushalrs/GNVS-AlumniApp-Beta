@@ -8,12 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference users = database.getReference().child("users");
+    DatabaseReference ref = users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
