@@ -40,7 +40,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ImageViewHol
         private ImageView mImage;
         public ImageViewHolder(View itenView){
             super(itenView);
-            mImage = itemView.findViewById(R.id.recyclerImage);
+            mImage = itemView.findViewById(R.id.postImage);
         }
         public void mSetImage(String url){
             Picasso.get().load(url).fit().centerCrop().into(mImage);
