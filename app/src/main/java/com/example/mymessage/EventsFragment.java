@@ -1,11 +1,23 @@
 package com.example.mymessage;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -13,6 +25,14 @@ import androidx.fragment.app.Fragment;
  * create an instance of this fragment.
  */
 public class EventsFragment extends Fragment {
+
+    private EventAdapter eventAdapter;
+    private ArrayList<String> eventList = new ArrayList<>();
+    private RecyclerView recycler;
+    FirebaseDatabase database;
+    DatabaseReference ref;
+    Context thisContext;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,15 +69,39 @@ public class EventsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            database = FirebaseDatabase.getInstance("https://gdsc-task1-default-rtdb.firebaseio.com/");
+            ref = database.getReference().child("Home");
+            eventAdapter = new EventAdapter(eventList);
+            addData();
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_events, container, false);
+        View view = inflater.inflate(R.layout.fragment_events, container, false);
+        recycler = view.findViewById(R.id.event);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(thisContext);
+        recycler.setLayoutManager(layoutManager);
+        recycler.setAdapter(eventAdapter);
+        return view;
+    }
+
+    public void addData() {
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    eventList.add(snapshot.getValue().toString());
+                }
+                eventAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
+

@@ -36,6 +36,9 @@
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.168" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.19157608695652173" />
         <entry key="app/src/main/res/layout/buttonstyle.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/event.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_batch__filter.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_events.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.24334600760456274" />
       </map>
