@@ -30,6 +30,7 @@
                 android:src="@drawable/ic_baseline_add_a_photo_24" />
 
             <TextView
+                android:id="@+id/nameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -60,6 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Photos"
+                        android:textColor="?attr/colorOnPrimary"
                         android:textSize="20sp"
                         />
                     <TextView
@@ -83,6 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Followers"
+                        android:textColor="?attr/colorOnPrimary"
                         android:textSize="20sp"
                         />
                     <TextView
@@ -106,6 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Following"
+                        android:textColor="?attr/colorOnPrimary"
                         android:textSize="20sp"
                         />
                     <TextView
@@ -140,10 +144,12 @@
                 android:src="@drawable/ic_baseline_email_24"/>
             <TextView
                 android:textStyle="bold"
+                android:id="@+id/emailText"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
+                android:textColor="?attr/colorOnPrimary"
                 android:text="Wiliam@gmail.com"/>
         </LinearLayout>
 
@@ -159,11 +165,12 @@
                 android:src="@drawable/ic_baseline_group_24"/>
             <TextView
                 android:textStyle="bold"
-
+                android:id="@+id/batchText"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
+                android:textColor="?attr/colorOnPrimary"
                 android:text="Batch" />
         </LinearLayout>
 

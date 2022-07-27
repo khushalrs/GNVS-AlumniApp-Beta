@@ -1,13 +1,17 @@
 package com.example.mymessage;
 
 public class User {
-    private final String email;
-    private final String password;
-    private final String name;
-    private final String job;
-    private final String company;
-    private final String batch;
-    private final String phone;
+    private String email;
+    private String password;
+    private String name;
+    private String job;
+    private String company;
+    private String batch;
+    private String phone;
+
+    public User(){
+
+    }
 
     public User(String email, String password, String name, String job, String company, String batch, String phone) {
         this.email = email;
@@ -18,6 +22,8 @@ public class User {
         this.company = company;
         this.phone = phone;
     }
+
+
 
     public String getEmail(){
         return email;

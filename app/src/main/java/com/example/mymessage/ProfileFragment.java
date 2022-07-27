@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,22 +23,28 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class ProfileFragment extends Fragment {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference users = database.getReference().child("users");
-    DatabaseReference ref = users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
+    DatabaseReference ref = users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser().getUid()));
     private FirebaseAuth mAuth;
     Context context;
     Button signout;
     View appbar;
     ImageButton messageButton;
+    TextView nameText, emailText, batchText;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -47,6 +54,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        queryData();
     }
 
     @Override
@@ -54,6 +62,9 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View V = inflater.inflate(R.layout.fragment_profile, container, false);
         signout = V.findViewById(R.id.SignOutbtn);
+        nameText = V.findViewById(R.id.nameText);
+        emailText = V.findViewById(R.id.emailText);
+        batchText = V.findViewById(R.id.batchText);
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,5 +92,25 @@ public class ProfileFragment extends Fragment {
 
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(context,SignInActivity.class));
+    }
+
+    public void queryData() {
+
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //Log.i("Profile Path", snapshot.getKey());
+                User user = snapshot.getValue(User.class);
+                nameText.setText(user.getName());
+                emailText.setText(user.getEmail());
+                batchText.setText(user.getBatch());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
