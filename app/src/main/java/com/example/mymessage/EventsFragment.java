@@ -1,10 +1,12 @@
 package com.example.mymessage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,11 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EventsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EventsFragment extends Fragment {
 
     private EventAdapter eventAdapter;
@@ -32,48 +29,20 @@ public class EventsFragment extends Fragment {
     FirebaseDatabase database;
     DatabaseReference ref;
     Context thisContext;
-
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    View appbar;
+    ImageButton messageButton;
 
     public EventsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment EventsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static EventsFragment newInstance(String param1, String param2) {
-        EventsFragment fragment = new EventsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            database = FirebaseDatabase.getInstance("https://gdsc-task1-default-rtdb.firebaseio.com/");
-            ref = database.getReference().child("Home");
-            eventAdapter = new EventAdapter(eventList);
-            addData();
-        }
+        database = FirebaseDatabase.getInstance("https://gdsc-task1-default-rtdb.firebaseio.com/");
+        ref = database.getReference().child("Home");
+        eventAdapter = new EventAdapter(eventList);
+        addData();
     }
 
     @Override
@@ -81,6 +50,14 @@ public class EventsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_events, container, false);
         recycler = view.findViewById(R.id.event);
+        appbar = view.findViewById(R.id.appbar);
+        messageButton = appbar.findViewById(R.id.messageBtn);
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(thisContext, MainActivity.class));
+            }
+        });
         LinearLayoutManager layoutManager = new LinearLayoutManager(thisContext);
         recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(eventAdapter);

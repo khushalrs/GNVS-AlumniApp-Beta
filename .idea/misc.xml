@@ -19,13 +19,16 @@
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/activity_search.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/activity_signin.xml" value="0.3512064343163539" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/activity_splash.xml" value="0.25" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/app_bar.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/batch_item.xml" value="0.264" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/chat_list.xml" value="0.2" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/event.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_batch__filter.xml" value="0.264" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_batch_filter.xml" value="0.11481481481481481" />
-        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_events.xml" value="0.12777777777777777" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_events.xml" value="0.264" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_new_post.xml" value="0.25" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/list_message.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/my_message.xml" value="0.25" />
@@ -35,12 +38,8 @@
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.168" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.19157608695652173" />
-        <entry key="app/src/main/res/layout/buttonstyle.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/event.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/fragment_batch__filter.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/fragment_events.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.24334600760456274" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.20727081298828126" />
       </map>
     </option>
   </component>

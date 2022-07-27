@@ -1,6 +1,8 @@
 package com.example.mymessage;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +53,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
         public void bind(String title, String des, String img){
             name.setText(title);
             description.setText(des);
-            Picasso.get().load(img).fit().centerCrop().into(imageView);
+            //Log.i("Image Url", img);
+            //imageView.setImageResource(R.drawable.ic_baseline_send_24);
+            Picasso.get().load(img).into(imageView);
         }
     }
 }

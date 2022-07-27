@@ -1,6 +1,7 @@
 package com.example.mymessage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -45,6 +47,9 @@ public class Batch_FilterFragment extends Fragment {
     ArrayAdapter<String> dropAdapter;
     ProgressBar progressBar;
     LinearLayout layout;
+    View appbar;
+    ImageButton messageButton;
+
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final Handler handler = new Handler(Looper.getMainLooper());
 
@@ -76,7 +81,15 @@ public class Batch_FilterFragment extends Fragment {
         progressBar = v.findViewById(R.id.batchProgress);
         progressBar.setVisibility(View.VISIBLE);
         layout = v.findViewById(R.id.batch_layout);
-        layout.setVisibility(View.GONE);
+        appbar = v.findViewById(R.id.appbar);
+        messageButton = appbar.findViewById(R.id.messageBtn);
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, MainActivity.class));
+            }
+        });
+        layout.setVisibility(View.INVISIBLE);
         addBatchData();
         dropDown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -138,6 +151,7 @@ public class Batch_FilterFragment extends Fragment {
 
     public void addUserData(String year){
         if(!Objects.equals(year, "Select the graduation year")){
+            user.clear();
             for(OldUser oldUser: students){
                 if(String.valueOf(oldUser.getGraduate()).equals(year)){
                     user.add(String.valueOf(oldUser.getName()));

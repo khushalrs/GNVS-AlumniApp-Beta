@@ -21,7 +21,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 public class MainActivity2 extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-    ImageButton messageButton;
+    //ImageButton messageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +29,13 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         replaceFragment(new HomeFragment());
-        messageButton = findViewById(R.id.messageBtn);
+        /*messageButton = findViewById(R.id.messageBtn);
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity2.this, MainActivity.class));
             }
-        });
+        });*/
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

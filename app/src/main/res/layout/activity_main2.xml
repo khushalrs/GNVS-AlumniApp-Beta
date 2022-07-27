@@ -6,15 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity2">
 
-    <include layout="@layout/app_bar"
-        android:id="@+id/appbar"/>
-
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottomNavigationView"
-        android:layout_below="@+id/appbar"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp" />
 
