@@ -6,6 +6,12 @@
     tools:context="com.example.mymessage.MainActivity"
     android:background="@color/white"
     android:orientation="vertical">
+
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/app_bar" />
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="405dp">
