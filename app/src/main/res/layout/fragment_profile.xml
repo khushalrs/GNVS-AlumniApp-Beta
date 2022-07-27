@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.mymessage.MainActivity"
     android:background="@color/white"
     android:orientation="vertical">
@@ -61,7 +62,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Photos"
-                        android:textColor="?attr/colorOnPrimary"
+                        android:textColor="@color/black"
                         android:textSize="20sp"
                         />
                     <TextView
@@ -85,7 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Followers"
-                        android:textColor="?attr/colorOnPrimary"
+                        android:textColor="@color/black"
                         android:textSize="20sp"
                         />
                     <TextView
@@ -109,7 +110,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Following"
-                        android:textColor="?attr/colorOnPrimary"
+                        android:textColor="@color/black"
                         android:textSize="20sp"
                         />
                     <TextView
@@ -149,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
-                android:textColor="?attr/colorOnPrimary"
+                android:textColor="@color/black"
                 android:text="Wiliam@gmail.com"/>
         </LinearLayout>
 
@@ -170,16 +171,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
-                android:textColor="?attr/colorOnPrimary"
+                android:textColor="@color/black"
                 android:text="Batch" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/SignOutbtn"
-        android:textColor="#fff"
-        android:background="@drawable/common_google_signin_btn_icon_dark"
+        app:cornerRadius="50dp"
+        style="@style/ButtonStyle"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
