@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "883688592469",
+    "firebase_url": "https://gnvs-beta-default-rtdb.firebaseio.com",
     "project_id": "gnvs-beta",
     "storage_bucket": "gnvs-beta.appspot.com"
   },
@@ -9,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:883688592469:android:88e007dca609c56cb430dc",
         "android_client_info": {
-          "package_name": "com.example.mymessage"
+          "package_name": "com.GNVS.AlumniApp"
         }
       },
       "oauth_client": [

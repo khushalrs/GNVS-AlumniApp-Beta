@@ -1,4 +1,4 @@
-package com.example.mymessage;
+package com.GNVS.AlumniApp;
 
 public class OldUser {
     private String Name;

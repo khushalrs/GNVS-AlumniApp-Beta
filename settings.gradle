@@ -16,5 +16,5 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
-rootProject.name = "My Message"
+rootProject.name = "GNVS Alumni App"
 include ':app'

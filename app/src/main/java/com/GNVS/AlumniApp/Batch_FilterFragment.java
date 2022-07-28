@@ -1,8 +1,7 @@
-package com.example.mymessage;
+package com.GNVS.AlumniApp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;

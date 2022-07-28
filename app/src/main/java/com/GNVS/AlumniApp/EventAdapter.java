@@ -1,8 +1,6 @@
-package com.example.mymessage;
+package com.GNVS.AlumniApp;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +14,21 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class HomeAdapter extends RecyclerView.Adapter {
-
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder> {
     private ArrayList<PostList> postlist;
-
-    public HomeAdapter(Context c, ArrayList<PostList> postList) {
+    public EventAdapter(Context c, ArrayList<PostList> postList){
         postlist = postList;
     }
-
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new HomeHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event, parent, false));
+    public EventAdapter.EventHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new EventAdapter.EventHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EventAdapter.EventHolder holder, int position) {
         PostList p = postlist.get(position);
-        ((HomeHolder) holder).bind(p.getName(), p.getDescription(), p.getImage());
+        holder.bind(p.getName(), p.getDescription(), p.getImage(), p.getDate());
     }
 
     @Override
@@ -41,18 +36,20 @@ public class HomeAdapter extends RecyclerView.Adapter {
         return postlist.size();
     }
 
-    private static class HomeHolder extends RecyclerView.ViewHolder{
-        TextView name, description;
+    protected static class EventHolder extends RecyclerView.ViewHolder {
+        TextView name, description, date;
         ImageView imageView;
-        public HomeHolder(@NonNull View itemView) {
+        public EventHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.image_title);
             description = itemView.findViewById(R.id.postname);
             imageView = itemView.findViewById(R.id.postImage);
+            date = itemView.findViewById(R.id.eventDate);
         }
-        public void bind(String title, String des, String img){
+        public void bind(String title, String des, String img, String d){
             name.setText(title);
             description.setText(des);
+            date.setText(d);
             //Log.i("Image Url", img);
             //imageView.setImageResource(R.drawable.ic_baseline_send_24);
             Picasso.get().load(img).into(imageView);
