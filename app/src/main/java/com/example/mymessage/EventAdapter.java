@@ -1,9 +1,11 @@
 package com.example.mymessage;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,38 +14,45 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ImageViewHolder> {
-    private ArrayList<String> imageList;
-    public EventAdapter(ArrayList<String> imgList){
-        imageList = imgList;
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder> {
+    private ArrayList<PostList> postlist;
+    public EventAdapter(Context c, ArrayList<PostList> postList){
+        postlist = postList;
     }
     @NonNull
     @Override
-    public EventAdapter.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.event, parent, false);
-        return new ImageViewHolder(view);
+    public EventAdapter.EventHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new EventAdapter.EventHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EventAdapter.ImageViewHolder holder, int position) {
-        final String image = imageList.get(position);
-        holder.mSetImage(image);
+    public void onBindViewHolder(@NonNull EventAdapter.EventHolder holder, int position) {
+        PostList p = postlist.get(position);
+        holder.bind(p.getName(), p.getDescription(), p.getImage(), p.getDate());
     }
 
     @Override
     public int getItemCount() {
-        return imageList == null? 0: imageList.size();
+        return postlist.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mImage;
-        public ImageViewHolder(View itenView){
-            super(itenView);
-            mImage = itemView.findViewById(R.id.postImage);
+    protected static class EventHolder extends RecyclerView.ViewHolder {
+        TextView name, description, date;
+        ImageView imageView;
+        public EventHolder(@NonNull View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.image_title);
+            description = itemView.findViewById(R.id.postname);
+            imageView = itemView.findViewById(R.id.postImage);
+            date = itemView.findViewById(R.id.eventDate);
         }
-        public void mSetImage(String url){
-            Picasso.get().load(url).fit().centerCrop().into(mImage);
+        public void bind(String title, String des, String img, String d){
+            name.setText(title);
+            description.setText(des);
+            date.setText(d);
+            //Log.i("Image Url", img);
+            //imageView.setImageResource(R.drawable.ic_baseline_send_24);
+            Picasso.get().load(img).into(imageView);
         }
     }
 }

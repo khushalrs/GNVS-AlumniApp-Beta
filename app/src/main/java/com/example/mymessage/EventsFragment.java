@@ -3,6 +3,7 @@ package com.example.mymessage;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 public class EventsFragment extends Fragment {
 
     private EventAdapter eventAdapter;
-    private ArrayList<String> eventList = new ArrayList<>();
+    ArrayList<PostList> PostList = new ArrayList<>();
     private RecyclerView recycler;
     FirebaseDatabase database;
     DatabaseReference ref;
@@ -39,9 +40,8 @@ public class EventsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        database = FirebaseDatabase.getInstance("https://gdsc-task1-default-rtdb.firebaseio.com/");
-        ref = database.getReference().child("Home");
-        eventAdapter = new EventAdapter(eventList);
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference().child("users").child("hBVmq138IecWdstkYKcG0cgLwHp1").child("posts");
         addData();
     }
 
@@ -60,6 +60,7 @@ public class EventsFragment extends Fragment {
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(thisContext);
         recycler.setLayoutManager(layoutManager);
+        eventAdapter = new EventAdapter(thisContext, PostList);
         recycler.setAdapter(eventAdapter);
         return view;
     }
@@ -68,8 +69,11 @@ public class EventsFragment extends Fragment {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.i("EventPath", dataSnapshot.getKey());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    eventList.add(snapshot.getValue().toString());
+                    Log.i("EventPath", snapshot.getKey());
+                    PostList p = snapshot.getValue(PostList.class);
+                    PostList.add(p);
                 }
                 eventAdapter.notifyDataSetChanged();
             }
