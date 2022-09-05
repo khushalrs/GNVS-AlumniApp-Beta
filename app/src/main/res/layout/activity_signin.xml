@@ -10,8 +10,8 @@
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/lobster"
         android:text="Welcome Back"
         android:textColor="?attr/colorOnPrimary"
@@ -25,12 +25,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:textSize="16sp"
-        android:layout_marginTop="52dp"
-        android:textColor="?attr/colorOnPrimary"
-        android:typeface="serif"
-        android:textStyle="bold"
+        android:layout_marginTop="208dp"
         android:text="Email"
+        android:textColor="?attr/colorOnPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:typeface="serif"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="28dp"
         android:text="Password"
         android:textColor="?attr/colorOnPrimary"
         android:textSize="16sp"
@@ -104,33 +104,42 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login"
+        style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/ButtonStyle"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="24dp"
         android:text="Log In"
         android:textSize="16sp"
         android:textStyle="bold"
         android:typeface="serif"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="28dp"
         app:cornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/register"
+        style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/ButtonStyle"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
         android:text="Don't have an account? Click Here"
         android:textSize="14sp"
         android:typeface="serif"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="28dp"
         app:cornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="343dp"
+        android:layout_height="170dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.249"
+        app:srcCompat="@drawable/logo_gnvs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
