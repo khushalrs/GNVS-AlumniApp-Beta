@@ -23,12 +23,12 @@
                 app:cardCornerRadius="250dp">
 
             <ImageView
+                android:id="@+id/appbarLogo"
                 android:layout_width="40dp"
                 android:background="?attr/colorOnSecondary"
                 android:layout_height="40dp"
                 android:src="@drawable/logo_gnvs"
-                android:scaleType="centerCrop"
-                />
+                android:scaleType="centerCrop" />
 
             </androidx.cardview.widget.CardView>
 

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference users = database.getReference().child("users");
     ItemClickListener itemClickListener;
+    View appbar;
+    ImageButton search;
     SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +42,11 @@ public class MainActivity extends AppCompatActivity {
         keyList = new ArrayList<>();
         nameList = new ArrayList<>();
         userList = new ArrayList<>();
-        FloatingActionButton newChat = findViewById(R.id.newChat);
+        appbar = findViewById(R.id.appbar);
+        search = appbar.findViewById(R.id.messageBtn);
+        search.setImageResource(R.drawable.ic_baseline_search_24);
         sharedPreferences = getSharedPreferences("ThisUser", Context.MODE_PRIVATE);
-        newChat.setOnClickListener(new View.OnClickListener() {
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 searchContacts();
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     public void addUser(){
         DatabaseReference ref = users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid())).child("messages");
         Query q = ref.orderByChild("time");
+        keyList.clear();
         q.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -90,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
             userList.add(s[1]);
         }
         mChatAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addUser();
     }
 
     public void searchContacts(){

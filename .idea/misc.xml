@@ -7,9 +7,26 @@
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable-v24/ic_baseline_filter_list_24.xml" value="0.1" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1695" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/bottom_nav_color.xml" value="0.1695" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/circular_btn.xml" value="0.17" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/custom_progress.xml" value="0.167" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/heart.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/heart_clicked.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_add_a_photo_24.xml" value="0.166" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_add_circle_outline_24.xml" value="0.1695" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_comment_24.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_group_24.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_image_search_24.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_baseline_smartphone_24.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_comment.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_contacts.xml" value="0.166" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1695" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/ic_message.xml" value="0.166" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/drawable/image_container.xml" value="0.166" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/font/league.xml" value="0.27487179487179486" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/font/lobster.xml" value="0.27487179487179486" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/activity_chat.xml" value="0.264" />
@@ -19,6 +36,7 @@
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/activity_search.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/activity_signin.xml" value="0.264" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/activity_splash.xml" value="0.25" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/app_bar.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/batch_item.xml" value="0.264" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/chat_list.xml" value="0.2" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/event.xml" value="0.24615384615384617" />
@@ -28,6 +46,7 @@
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_new_post.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_profile.xml" value="0.24615384615384617" />
+        <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_profile_posts.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/list_message.xml" value="0.25" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/my_message.xml" value="0.25" />
@@ -35,28 +54,15 @@
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/layout/search_list.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/menu/bottom_nav_menu.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/Khushal/Android/MyMessage/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/_bg__android_large___1_ek2_shape.xml" value="0.2" />
-        <entry key="app/src/main/res/drawable/circular_btn.xml" value="0.164" />
-        <entry key="app/src/main/res/drawable/ic_baseline_back_24.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.168" />
-        <entry key="app/src/main/res/drawable/ic_baseline_smartphone_24.xml" value="0.164" />
-        <entry key="app/src/main/res/drawable/ic_message.xml" value="0.164" />
-        <entry key="app/src/main/res/font/lobster_font.xml" value="0.34010416666666665" />
-        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.2210144927536232" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24375" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.19157608695652173" />
         <entry key="app/src/main/res/layout/activity_signin.xml" value="0.2210144927536232" />
-        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.2210144927536232" />
-        <entry key="app/src/main/res/layout/android_large___1.xml" value="0.1901397705078125" />
-        <entry key="app/src/main/res/layout/app_bar.xml" value="0.24375" />
         <entry key="app/src/main/res/layout/buttonstyle.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/chat_list.xml" value="0.2210144927536232" />
         <entry key="app/src/main/res/layout/event.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_batch__filter.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_events.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.24334600760456274" />
-        <entry key="app/src/main/res/layout/my_message.xml" value="0.24375" />
       </map>
     </option>
   </component>

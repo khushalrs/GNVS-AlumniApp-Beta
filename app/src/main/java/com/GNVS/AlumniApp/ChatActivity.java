@@ -34,7 +34,7 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView mMessageRecycler;
     private MessageAdapter mMessageAdapter;
     ArrayList<MessageList> messageList;
-    ImageButton mSend;
+    ImageButton mSend, back;
     EditText messageText;
     FirebaseUser currentUser;
     String key,id,user, thisUser;
@@ -75,7 +75,13 @@ public class ChatActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("ThisUser", Context.MODE_PRIVATE);
         thisUser = sharedPreferences.getString("UserName", "");
         thisUser = thisUser + ":" + currentUser.getUid();
-        //Toast.makeText(getApplicationContext(),thisUser, Toast.LENGTH_SHORT).show();
+        back = findViewById(R.id.chatBack);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ChatActivity.this, MainActivity.class));
+            }
+        });
         queryData();
     }
 
@@ -104,6 +110,8 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     public void sendMessage(){
         String newMessage = messageText.getText().toString();

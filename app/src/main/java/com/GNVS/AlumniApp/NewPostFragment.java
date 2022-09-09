@@ -40,6 +40,7 @@ import com.yalantis.ucrop.UCropActivity;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -172,45 +173,66 @@ public class NewPostFragment extends Fragment {
         // Defining the child of storageReference
         StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
 
-        // adding listeners on upload
-        // or failure of image
-        ref.putFile(mImageCaptureUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-                    {
-                        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                downloadedImage = uri;
-                                Toast.makeText(context, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
-                                String description = postDescription.getText().toString();
-                                Calendar calendar = Calendar.getInstance();
-                                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-                                String strTime = timeFormat.format(calendar.getTime());
-                                String strDate = new SimpleDateFormat("MMM d", Locale.getDefault()).format(new Date());
-                                String dateTime = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault()).format(new Date());
-                                dateTime = dateTime + " " + strTime;
-                                PostList p = new PostList(strDate, dateTime, strTime, downloadedImage.toString(), description, user.getUid(), sharedPreferences.getString("UserName", ""));
-                                DatabaseReference r = ref1.push();
-                                r.setValue(p);
-                                r = ref2.push();
-                                r.setValue(p);
-                                postDescription.setText("");
-                                imageView.setImageDrawable(null);
-                                progressDialog.dismiss();
-                            }
-                        });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e)
-                    {
-                        progressDialog.dismiss();
-                        Toast.makeText(context, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+        if(mImageCaptureUri!=null) {
+            // adding listeners on upload
+            // or failure of image
+            ref.putFile(mImageCaptureUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    downloadedImage = uri;
+                                    Toast.makeText(context, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+                                    String description = postDescription.getText().toString();
+                                    Calendar calendar = Calendar.getInstance();
+                                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                                    String strTime = timeFormat.format(calendar.getTime());
+                                    String strDate = new SimpleDateFormat("MMM d", Locale.getDefault()).format(new Date());
+                                    String dateTime = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                                    dateTime = dateTime + " " + strTime;
+                                    DatabaseReference r1 = ref1.push();
+                                    DatabaseReference r2 = ref2.push();
+                                    PostList p = new PostList(strDate, dateTime, strTime, downloadedImage.toString(), description, user.getUid(),
+                                            sharedPreferences.getString("UserName", ""), r1.toString(), r2.toString());
+                                    r1.setValue(p);
+                                    r2.setValue(p);
+                                    postDescription.setText("");
+                                    imageView.setImageDrawable(null);
+                                    progressDialog.dismiss();
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(context, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        else{
+            String description = postDescription.getText().toString();
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            String strTime = timeFormat.format(calendar.getTime());
+            String strDate = new SimpleDateFormat("MMM d", Locale.getDefault()).format(new Date());
+            String dateTime = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+            dateTime = dateTime + " " + strTime;
+            DatabaseReference r1 = ref1.push();
+            DatabaseReference r2 = ref2.push();
+            PostList p = new PostList(strDate, dateTime, strTime, "", description, user.getUid(),
+                    sharedPreferences.getString("UserName", ""), r1.toString(), r2.toString());
+            r1.setValue(p);
+            r2.setValue(p);
+            r1.child("likeId").setValue("");
+            r2.child("likeId").setValue("");
+            postDescription.setText("");
+            imageView.setImageDrawable(null);
+            progressDialog.dismiss();
+        }
     }
 
 }

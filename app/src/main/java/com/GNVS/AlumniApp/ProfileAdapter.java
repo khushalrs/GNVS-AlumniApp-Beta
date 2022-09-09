@@ -1,8 +1,6 @@
 package com.GNVS.AlumniApp;
 
-import android.content.ClipData;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,32 +18,26 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
+public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileHolder>{
 
-    private ArrayList<Posts> posts;
+    private ArrayList<Posts> postlist;
     Context c;
-    private ItemClickListener itemClickListener;
 
-    public HomeAdapter(Context c, ArrayList<Posts> posts, ItemClickListener i) {
-        this.posts = posts;
-        if(!posts.isEmpty()){
-        Log.i("Liesfjjvofpspfv", posts.get(3).getLikeId().get(0));}
+    public ProfileAdapter(Context c, ArrayList<Posts> postList) {
+        postlist = postList;
         this.c = c;
-        itemClickListener = i;
     }
 
     @NonNull
     @Override
-    public HomeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new HomeHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event, parent, false), itemClickListener);
+    public ProfileAdapter.ProfileHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ProfileAdapter.ProfileHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.event, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeHolder holder, int position) {
-        Posts p = posts.get(position);
-        Log.i("Position home", Integer.toString(position));
-        Log.i("LikeId", posts.get(position).getLikeId().get(0));
-        if((posts.get(position).getLikeId()).contains(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+    public void onBindViewHolder(@NonNull ProfileAdapter.ProfileHolder holder, int position) {
+        Posts p = postlist.get(position);
+        if (p.getLikeId().contains(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             holder.like.setImageResource(R.drawable.heart_clicked);
         }
         holder.like.setOnClickListener(new View.OnClickListener() {
@@ -67,19 +59,34 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 }
             }
         });
-        holder.bind(p.getPostList().getName(), p.getPostList().getDescription(), p.getPostList().getImage(), p.getLikeId().size(), p.getLikeId());
+        holder.delete.setVisibility(View.VISIBLE);
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference r = FirebaseDatabase.getInstance().getReference("users").child(p.getUserId()).child("posts").child(p.getRef2());
+                r.removeValue();
+                r = FirebaseDatabase.getInstance().getReference("posts").child(p.getRef1());
+                r.removeValue();
+            }
+        });
+        holder.bind(p.getPostList().getName(), p.getPostList().getDescription(), p.getPostList().getImage(), p.getLikeId().size());
     }
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        if(postlist.isEmpty()){
+            return 0;
+        }
+        else{
+            return postlist.size();
+        }
     }
 
-    protected static class HomeHolder extends RecyclerView.ViewHolder {
-        TextView name, description, likeCount;
+    protected static class ProfileHolder extends RecyclerView.ViewHolder{
+        TextView name, description, likeCount, delete;
         ImageView imageView, like, comment;
         ItemClickListener i;
-        public HomeHolder(@NonNull View itemView, ItemClickListener i) {
+        public ProfileHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.image_title);
             likeCount = itemView.findViewById(R.id.likeCountTxt);
@@ -87,23 +94,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             imageView = itemView.findViewById(R.id.postImage);
             like = itemView.findViewById(R.id.likeBtn);
             comment = itemView.findViewById(R.id.commentBtn);
-            this.i = i;
-            name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    i.onClick(getAdapterPosition(), name.getText().toString());
-                }
-            });
+            delete = itemView.findViewById(R.id.deletePost);
         }
 
-        public void bind(String title, String des, String img, int lc, ArrayList<String> likes){
+        public void bind(String title, String des, String img, int lc){
             name.setText(title);
             description.setText(des);
-            likeCount.setText(Integer.toString(lc));
-            //Log.i("LikeId", likes.get(0));
-            if(likes.contains(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                like.setImageResource(R.drawable.heart_clicked);
-            }
+            //likeCount.setText(lc);
             //Log.i("Image Url", img);
             //imageView.setImageResource(R.drawable.ic_baseline_send_24);
             if(!Objects.equals(img, "")) {
