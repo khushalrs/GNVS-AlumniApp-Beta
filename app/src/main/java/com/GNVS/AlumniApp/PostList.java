@@ -13,6 +13,7 @@ public class PostList {
     private String userId;
     private String ref1;
     private String ref2;
+    private ArrayList<String> like;
 
     public PostList(){}
 
@@ -27,7 +28,6 @@ public class PostList {
         this.ref1 = ref1;
         this.ref2 = ref2;
         }
-
     public String getDate(){return date;}
     public String getDatetime(){
         return datetime;
@@ -53,21 +53,12 @@ public class PostList {
     public String getRef2(){
         return ref2;
     }
-
-}
-
-class Posts extends PostList{
-    private ArrayList<String> likeId;
-    private PostList postList;
-    public Posts(){}
-    public Posts(PostList p, ArrayList<String> like){
-        postList = p;
-        likeId = like;
-    }
     public ArrayList<String> getLikeId(){
-        return likeId;
+        return like;
     }
-    public PostList getPostList(){
-        return postList;
+    public void addLikeId(ArrayList<String> likes){
+        like = likes;
     }
+
 }
+

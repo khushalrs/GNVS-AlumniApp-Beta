@@ -36,8 +36,8 @@ public class HomeFragment extends Fragment {
     private HomeAdapter mHomeAdapter;
     FirebaseDatabase database;
     DatabaseReference ref;
-    ArrayList<Posts> postList;
-    ArrayList<String>likeList;
+    ArrayList<PostList> postList;
+    //ArrayList<String>likeList;
     View v;
     View appbar;
     Context c;
@@ -52,9 +52,9 @@ public class HomeFragment extends Fragment {
         public void onClick(int position, String value) {
             ProfileFragment pf = new ProfileFragment();
             Bundle b = new Bundle();
-            Log.i("Position Adapter", postList.get(position).getPostList().getUserId());
+            Log.i("Position Adapter", postList.get(position).getUserId());
             Log.i("Value Adapter", value);
-            b.putString("userId", postList.get(position).getPostList().getUserId());
+            b.putString("userId", postList.get(position).getUserId());
             pf.setArguments(b);
             getParentFragmentManager().beginTransaction().replace(R.id.frame_layout, pf).commit();
         }
@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         postList = new ArrayList<>();
-        likeList = new ArrayList<>();
+        //likeList = new ArrayList<>();
         database =  FirebaseDatabase.getInstance();
         ref = database.getReference().child("posts");
         queryData();
@@ -97,6 +97,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mHomeAdapter = new HomeAdapter(c, postList, itemClickListener);
+        mHomeRecycler.setLayoutManager(new LinearLayoutManager(c));
+        mHomeRecycler.setAdapter(mHomeAdapter);
     }
 
     public void queryData() {
@@ -105,7 +108,6 @@ public class HomeFragment extends Fragment {
             public void run() {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference ref = database.getReference().child("posts");
-                //Log.i("Path", ref.toString());
                 Query q = ref.orderByChild("dateTime");
                 q.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -114,22 +116,15 @@ public class HomeFragment extends Fragment {
                         postList.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             PostList m = dataSnapshot.getValue(PostList.class);
-                            likeList.clear();
+                            ArrayList<String> likeList = new ArrayList<>();
                             for(DataSnapshot dataSnapshot1 : dataSnapshot.child("likeId").getChildren()){
                                 String val = dataSnapshot1.getKey();
-                                //Log.i("Val", val);
                                 likeList.add(val);
                             }
-                            //Log.i("Display",m.getMessageText());
-                            Posts p = new Posts(m, likeList);
-                            postList.add(p);
-                            if(!postList.get(t).getLikeId().isEmpty()){
-                            Log.i("LIkesssss", postList.get(t).getLikeId().get(0));}
-                            t++;
+                            m.addLikeId(likeList);
+                            postList.add(m);
                         }
-                        mHomeAdapter = new HomeAdapter(c, postList, itemClickListener);
-                        mHomeRecycler.setLayoutManager(new LinearLayoutManager(c));
-                        mHomeRecycler.setAdapter(mHomeAdapter);
+                        mHomeAdapter.notifyDataSetChanged();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {

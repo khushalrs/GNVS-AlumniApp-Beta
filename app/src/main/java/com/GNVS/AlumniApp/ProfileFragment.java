@@ -39,8 +39,9 @@ public class ProfileFragment extends Fragment {
     Context context;
     Button messageButton;
     View appbar;
+    boolean redirected = false;
     RecyclerView profilePosts;
-    ArrayList<Posts> postList = new ArrayList<>();
+    ArrayList<PostList> postList = new ArrayList<>();
     ArrayList<String>likeList = new ArrayList<>();
     ProfileAdapter profileAdapter;
     String name, userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -57,8 +58,8 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             userId = getArguments().getString("userId");
+            redirected = true;
         }
-        Log.i("userID", userId);
         queryData();
         postsData();
     }
@@ -66,7 +67,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        profileAdapter = new ProfileAdapter(context, postList);
+        profileAdapter = new ProfileAdapter(context, postList, redirected);
         profilePosts.setLayoutManager(new LinearLayoutManager(context));
         profilePosts.setAdapter(profileAdapter);
     }
@@ -158,8 +159,8 @@ public class ProfileFragment extends Fragment {
                         Log.i("Val", val);
                         likeList.add(val);
                     }
-                    Posts p = new Posts(m, likeList);
-                    postList.add(p);
+                    m.addLikeId(likeList);
+                    postList.add(m);
                 }
                 profileAdapter.notifyDataSetChanged();
             }
