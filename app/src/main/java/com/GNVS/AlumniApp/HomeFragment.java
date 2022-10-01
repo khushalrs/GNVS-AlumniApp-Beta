@@ -27,6 +27,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -50,13 +51,21 @@ public class HomeFragment extends Fragment {
     ItemClickListener itemClickListener = new ItemClickListener() {
         @Override
         public void onClick(int position, String value) {
-            ProfileFragment pf = new ProfileFragment();
-            Bundle b = new Bundle();
-            Log.i("Position Adapter", postList.get(position).getUserId());
-            Log.i("Value Adapter", value);
-            b.putString("userId", postList.get(position).getUserId());
-            pf.setArguments(b);
-            getParentFragmentManager().beginTransaction().replace(R.id.frame_layout, pf).commit();
+            if (Objects.equals(value, "Profile")) {
+                ProfileFragment pf = new ProfileFragment();
+                Bundle b = new Bundle();
+                b.putString("userId", postList.get(position).getUserId());
+                pf.setArguments(b);
+                getParentFragmentManager().beginTransaction().replace(R.id.frame_layout, pf).commit();
+            }
+            else if(Objects.equals(value, "Comment")){
+                CommentFragment cf = new CommentFragment();
+                Bundle b = new Bundle();
+                b.putString("ref1", postList.get(position).getRef1());
+                b.putString("ref2", postList.get(position).getRef2());
+                cf.setArguments(b);
+                getParentFragmentManager().beginTransaction().replace(R.id.frame_layout, cf).commit();
+            }
         }
     };
 

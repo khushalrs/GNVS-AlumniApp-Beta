@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    keyList.add(dataSnapshot.getKey());
+                    if(!keyList.contains(dataSnapshot.getKey())){
+                    keyList.add(dataSnapshot.getKey());}
                 }
                 decode();
             }
@@ -95,13 +96,7 @@ public class MainActivity extends AppCompatActivity {
             nameList.add(s[0]);
             userList.add(s[1]);
         }
-        mChatAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        addUser();
+        chats.setAdapter(mChatAdapter);
     }
 
     public void searchContacts(){

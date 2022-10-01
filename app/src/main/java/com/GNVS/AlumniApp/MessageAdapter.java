@@ -75,7 +75,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
         void bind(MessageList message){
             messageText.setText(message.getMessageText());
-            timeText.setText((message.getTime()));
+            String dateTime = message.getDate() + " " + message.getTime();
+            timeText.setText(dateTime);
         }
     }
 
@@ -88,10 +89,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
             nameText = itemView.findViewById(R.id.text_user_other);
         }
         void bind(MessageList message){
-            //Log.i("Message", message.getMessageText());
             messageText.setText(message.getMessageText());
-            timeText.setText((message.getTime()));
-            nameText.setText(message.getEmail());
+            String dateTime = message.getDate() + " " + message.getTime();
+            timeText.setText(dateTime);
         }
     }
 

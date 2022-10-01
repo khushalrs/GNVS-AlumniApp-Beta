@@ -87,7 +87,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    i.onClick(getAdapterPosition(), name.getText().toString());
+                    i.onClick(getAdapterPosition(), "Profile");
+                }
+            });
+            comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    i.onClick(getAdapterPosition(), "Comment");
                 }
             });
         }
