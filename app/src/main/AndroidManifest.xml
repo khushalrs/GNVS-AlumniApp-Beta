@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.GNVS.AlumniApp">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
+
     <queries>
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
         <intent>
             <action android:name="com.android.camera.action.CROP" />
+
             <category android:name="android.intent.category.DEFAULT" />
         </intent>
         <intent>
             <action android:name="android.intent.action.PICK" />
+
             <data android:mimeType="vnd.android.cursor.dir/image" />
         </intent>
     </queries>
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyMessage"
-        android:hardwareAccelerated="false">
+        android:theme="@style/Theme.MyMessage">
         <activity
-            android:name="com.GNVS.AlumniApp.MainActivity2"
+            android:name=".MainActivity2"
             android:exported="false" />
         <activity
-            android:name="com.GNVS.AlumniApp.SearchActivity"
+            android:name=".SearchActivity"
             android:exported="false" />
         <activity
-            android:name="com.GNVS.AlumniApp.SplashActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,21 +48,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.GNVS.AlumniApp.MainActivity"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name="com.GNVS.AlumniApp.RegisterActivity"
+            android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name="com.GNVS.AlumniApp.SignInActivity"
+            android:name=".SignInActivity"
             android:exported="false" />
         <activity
-            android:name="com.GNVS.AlumniApp.ChatActivity"
+            android:name=".ChatActivity"
             android:exported="false" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>
