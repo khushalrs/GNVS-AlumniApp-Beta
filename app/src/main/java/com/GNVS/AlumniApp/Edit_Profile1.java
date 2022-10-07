@@ -3,11 +3,14 @@ package com.GNVS.AlumniApp;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,93 +24,86 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.jar.Attributes;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Edit_Profile1#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Edit_Profile1 extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private User user;
     private EditText emailEdit1, passwordEdit1, nameEdit1, companyEdit1, jobEdit1, batchEdit1, phoneEdit1;
+    private Button update;
+    String email, password, name, job, company, batch, phone;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ref;
 
     public Edit_Profile1() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Edit_Profile1.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Edit_Profile1 newInstance(String param1, String param2) {
-        Edit_Profile1 fragment = new Edit_Profile1();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        ref = database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
 
-
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        emailEdit1 = findViewById(R.id.email_edit1);
-        passwordEdit1 = findViewById(R.id.password_edit1);
-        nameEdit1 = findViewById(R.id.name_edit1);
-        companyEdit1 = findViewById(R.id.company_edit1);
-        jobEdit1= findViewById(R.id.job_edit1);
-        batchEdit1 = findViewById(R.id.batch_edit1);
-        phoneEdit1 = findViewById(R.id.phone_edit1);
-
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit__profile1, container, false);
-        queryData();
+        emailEdit1 = view.findViewById(R.id.email_edit1);
+        passwordEdit1 = view.findViewById(R.id.password_edit1);
+        nameEdit1 = view.findViewById(R.id.name_edit1);
+        companyEdit1 = view.findViewById(R.id.company_edit1);
+        jobEdit1 = view.findViewById(R.id.job_edit1);
+        batchEdit1 = view.findViewById(R.id.batch_edit1);
+        phoneEdit1 = view.findViewById(R.id.phone_edit1);
+        update = view.findViewById(R.id.edit_submit);
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateData();
+            }
+        });
+        // Inflate the layout for this fragment
         return view;
+    }
 
-
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        queryData();
     }
 
     public void queryData() {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference ref = database.getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                ref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                         user = snapshot.getValue(User.class);
-                    }
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("Edit profile", snapshot.getKey());
+                user = snapshot.getValue(User.class);
+                //setData();
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
 
-                    }
-                });
-}
-    public void bind() {
-        String email, password, name, job, company, batch, phone;
+    public void setData(){
+        emailEdit1.setText(user.getEmail());
+        passwordEdit1.setText(user.getPassword());
+        nameEdit1.setText(user.getName());
+        jobEdit1.setText(user.getJob());
+        companyEdit1.setText(user.getCompany());
+        batchEdit1.setText(user.getBatch());
+        phoneEdit1.setText(user.getPhone());
+    }
+
+    public void updateData(){
+        getInputData();
+        User u = new User(email, password, name, job, company, batch, phone);
+        ref.setValue(u);
+        getParentFragmentManager().popBackStack();
+    }
+
+    public void getInputData() {
         email = emailEdit1.getText().toString();
         password = passwordEdit1.getText().toString();
         name = nameEdit1.getText().toString();
@@ -117,6 +113,4 @@ public class Edit_Profile1 extends Fragment {
         phone = phoneEdit1.getText().toString();
 
     }
-
-
 }

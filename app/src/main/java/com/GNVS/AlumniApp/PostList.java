@@ -1,11 +1,12 @@
 package com.GNVS.AlumniApp;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class PostList {
 
     private String date;
-    private String datetime;
+    private long datetime;
     private String description;
     private String image;
     private String name;
@@ -17,7 +18,7 @@ public class PostList {
 
     public PostList(){}
 
-    public PostList(String date, String datetime, String time, String image, String description,String userId, String name, String ref1, String ref2){
+    public PostList(String date, long datetime, String time, String image, String description,String userId, String name, String ref1, String ref2){
         this.date = date;
         this.datetime = datetime;
         this.time = time;
@@ -29,7 +30,7 @@ public class PostList {
         this.ref2 = ref2;
         }
     public String getDate(){return date;}
-    public String getDatetime(){
+    public long getDatetime(){
         return datetime;
     }
     public String getImage(){

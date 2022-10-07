@@ -106,7 +106,8 @@ public class ProfileFragment extends Fragment {
             messageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "Edit Profile", Toast.LENGTH_SHORT).show();
+                    Edit_Profile1 ep = new Edit_Profile1();
+                    getParentFragmentManager().beginTransaction().replace(R.id.frame_layout, ep).commit();
                 }
             });
         }
@@ -156,7 +157,6 @@ public class ProfileFragment extends Fragment {
                     likeList.clear();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.child("likeId").getChildren()) {
                         String val = dataSnapshot1.getKey();
-                        Log.i("Val", val);
                         likeList.add(val);
                     }
                     m.addLikeId(likeList);

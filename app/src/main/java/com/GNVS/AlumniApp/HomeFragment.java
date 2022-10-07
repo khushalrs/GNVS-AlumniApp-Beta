@@ -24,9 +24,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -38,7 +45,6 @@ public class HomeFragment extends Fragment {
     FirebaseDatabase database;
     DatabaseReference ref;
     ArrayList<PostList> postList;
-    //ArrayList<String>likeList;
     View v;
     View appbar;
     Context c;
@@ -117,21 +123,24 @@ public class HomeFragment extends Fragment {
             public void run() {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference ref = database.getReference().child("posts");
-                Query q = ref.orderByChild("dateTime");
+                //String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
+                Query q = ref.orderByChild("datetime");
                 q.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int t = 0;
                         postList.clear();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             PostList m = dataSnapshot.getValue(PostList.class);
                             ArrayList<String> likeList = new ArrayList<>();
-                            for(DataSnapshot dataSnapshot1 : dataSnapshot.child("likeId").getChildren()){
-                                String val = dataSnapshot1.getKey();
-                                likeList.add(val);
+                            if(dataSnapshot.hasChild("likeId")){
+                                for(DataSnapshot dataSnapshot1 : dataSnapshot.child("likeId").getChildren()){
+                                    String val = dataSnapshot1.getKey();
+                                    likeList.add(val);
+                                }
                             }
                             m.addLikeId(likeList);
                             postList.add(m);
+                            Collections.reverse(postList);
                         }
                         mHomeAdapter.notifyDataSetChanged();
                         handler.postDelayed(new Runnable() {

@@ -26,6 +26,7 @@
         android:visibility="invisible"
         android:id="@+id/recycler_home"
         android:layout_width="match_parent"
+        android:layout_gravity="center"
         android:layout_height="wrap_content" />
     </LinearLayout>
 

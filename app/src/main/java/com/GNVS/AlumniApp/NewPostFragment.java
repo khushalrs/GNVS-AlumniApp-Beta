@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -43,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.Executor;
@@ -194,10 +196,20 @@ public class NewPostFragment extends Fragment {
                                     dateTime = dateTime + " " + strTime;
                                     DatabaseReference r1 = ref1.push();
                                     DatabaseReference r2 = ref2.push();
-                                    PostList p = new PostList(strDate, dateTime, strTime, downloadedImage.toString(), description, user.getUid(),
-                                            sharedPreferences.getString("UserName", ""), r1.toString(), r2.toString());
-                                    r1.setValue(p);
-                                    r2.setValue(p);
+                                    HashMap<String, Object> hashMap = new HashMap<>();
+                                    hashMap.put("date", strDate);
+                                    hashMap.put("datetime", ServerValue.TIMESTAMP);
+                                    hashMap.put("time", strTime);
+                                    hashMap.put("image", downloadedImage.toString());
+                                    hashMap.put("description", description);
+                                    hashMap.put("userId", user.getUid());
+                                    hashMap.put("name", sharedPreferences.getString("UserName", ""));
+                                    hashMap.put("ref1", r1.toString());
+                                    hashMap.put("ref2", r2.toString());
+                                    //PostList p = new PostList(strDate, ServerValue.TIMESTAMP, strTime, downloadedImage.toString(), description, user.getUid(),
+                                            //sharedPreferences.getString("UserName", ""), r1.toString(), r2.toString());
+                                    r1.setValue(hashMap);
+                                    r2.setValue(hashMap);
                                     postDescription.setText("");
                                     imageView.setImageDrawable(null);
                                     progressDialog.dismiss();
@@ -223,10 +235,20 @@ public class NewPostFragment extends Fragment {
             dateTime = dateTime + " " + strTime;
             DatabaseReference r1 = ref1.push();
             DatabaseReference r2 = ref2.push();
-            PostList p = new PostList(strDate, dateTime, strTime, "", description, user.getUid(),
-                    sharedPreferences.getString("UserName", ""), r1.toString(), r2.toString());
-            r1.setValue(p);
-            r2.setValue(p);
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("date", strDate);
+            hashMap.put("datetime", ServerValue.TIMESTAMP);
+            hashMap.put("time", strTime);
+            hashMap.put("image", "");
+            hashMap.put("description", description);
+            hashMap.put("userId", user.getUid());
+            hashMap.put("name", sharedPreferences.getString("UserName", ""));
+            hashMap.put("ref1", r1.toString());
+            hashMap.put("ref2", r2.toString());
+            //PostList p = new PostList(strDate, ServerValue.TIMESTAMP, strTime, "", description, user.getUid(),
+                    //sharedPreferences.getString("UserName", ""), r1.toString(), r2.toString());
+            r1.setValue(hashMap);
+            r2.setValue(hashMap);
             r1.child("likeId").setValue("");
             r2.child("likeId").setValue("");
             postDescription.setText("");

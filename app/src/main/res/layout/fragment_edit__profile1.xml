@@ -307,7 +307,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnregister"
+                    android:id="@+id/edit_submit"
                     style="@style/ButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
