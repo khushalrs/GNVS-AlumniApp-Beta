@@ -80,6 +80,13 @@ public class CommentFragment extends Fragment {
                 postComment();
             }
         });
+        ImageButton back = v.findViewById(R.id.commentBack);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                backPressed();
+            }
+        });
         return v;
     }
 
@@ -124,6 +131,10 @@ public class CommentFragment extends Fragment {
             commentText.setText("");
             Toast.makeText(c, "Comment Posted", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void backPressed(){
+        getParentFragmentManager().popBackStack();
     }
 
 }

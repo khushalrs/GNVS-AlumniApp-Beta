@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
                 b.putString("ref1", postList.get(position).getRef1());
                 b.putString("ref2", postList.get(position).getRef2());
                 cf.setArguments(b);
-                getParentFragmentManager().beginTransaction().replace(R.id.frame_layout, cf).commit();
+                getParentFragmentManager().beginTransaction().replace(R.id.frame_layout, cf).addToBackStack(null).commit();
             }
         }
     };

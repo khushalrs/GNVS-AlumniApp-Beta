@@ -25,9 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.jar.Attributes;
 
 public class Edit_Profile1 extends Fragment {
-    private User user;
+    private User user = new User();
     private EditText emailEdit1, passwordEdit1, nameEdit1, companyEdit1, jobEdit1, batchEdit1, phoneEdit1;
-    private Button update;
     String email, password, name, job, company, batch, phone;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref;
@@ -40,8 +39,7 @@ public class Edit_Profile1 extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ref = database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
-
+        ref = database.getReference().child("users").child(FirebaseAuth.getInstance().getUid());
     }
 
     @Override
@@ -54,14 +52,13 @@ public class Edit_Profile1 extends Fragment {
         jobEdit1 = view.findViewById(R.id.job_edit1);
         batchEdit1 = view.findViewById(R.id.batch_edit1);
         phoneEdit1 = view.findViewById(R.id.phone_edit1);
-        update = view.findViewById(R.id.edit_submit);
+        Button update = view.findViewById(R.id.edit_submit);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateData();
             }
         });
-        // Inflate the layout for this fragment
         return view;
     }
 
@@ -77,7 +74,8 @@ public class Edit_Profile1 extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.i("Edit profile", snapshot.getKey());
                 user = snapshot.getValue(User.class);
-                //setData();
+                Log.i("Edit profile", user.getBatch());
+                setData();
             }
 
             @Override
@@ -98,8 +96,13 @@ public class Edit_Profile1 extends Fragment {
 
     public void updateData(){
         getInputData();
-        User u = new User(email, password, name, job, company, batch, phone);
-        ref.setValue(u);
+        ref.child("email").setValue(email);
+        ref.child("password").setValue(password);
+        ref.child("name").setValue(name);
+        ref.child("job").setValue(job);
+        ref.child("company").setValue(company);
+        ref.child("batch").setValue(batch);
+        ref.child("phone").setValue(phone);
         getParentFragmentManager().popBackStack();
     }
 

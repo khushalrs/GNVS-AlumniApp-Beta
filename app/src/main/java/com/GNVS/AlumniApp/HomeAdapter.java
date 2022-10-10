@@ -43,8 +43,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.like.getDrawable().getConstantState() == c.getDrawable(R.drawable.heart_unclicked).getConstantState()) {
+                if ((int)holder.like.getTag() == 0) {
                     holder.like.setImageResource(R.drawable.heart_clicked);
+                    holder.like.setTag(1);
                     DatabaseReference r = FirebaseDatabase.getInstance().getReferenceFromUrl(p.getRef2()).child("likeId");
                     r.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue("1");
                     r = FirebaseDatabase.getInstance().getReferenceFromUrl(p.getRef1()).child("likeId");
@@ -52,6 +53,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 }
                 else {
                     holder.like.setImageResource(R.drawable.heart_unclicked);
+                    holder.like.setTag(0);
                     DatabaseReference r = FirebaseDatabase.getInstance().getReferenceFromUrl(p.getRef2()).child("likeId");
                     r.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
                     r = FirebaseDatabase.getInstance().getReferenceFromUrl(p.getRef1()).child("likeId");
@@ -99,7 +101,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             description.setText(des);
             likeCount.setText(Integer.toString(lc));
             if(likes.contains(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                like.setTag(1);
                 like.setImageResource(R.drawable.heart_clicked);
+            }
+            else{
+                like.setTag(0);
             }
             if(!Objects.equals(img, "")) {
                 Picasso.get().load(img).into(imageView);

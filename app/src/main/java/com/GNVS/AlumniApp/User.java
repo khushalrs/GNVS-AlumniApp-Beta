@@ -8,12 +8,13 @@ public class User {
     private String company;
     private String batch;
     private String phone;
+    private String propic;
 
     public User(){
 
     }
 
-    public User(String email, String password, String name, String job, String company, String batch, String phone) {
+    public User(String email, String password, String name, String job, String company, String batch, String phone, String propic) {
         this.email = email;
         this.password = password;
         this.batch = batch;
@@ -21,6 +22,7 @@ public class User {
         this.job = job;
         this.company = company;
         this.phone = phone;
+        this.propic = propic;
     }
 
 
@@ -45,6 +47,9 @@ public class User {
     }
     public String getPhone(){
         return phone;
+    }
+    public String getPropic(){
+        return propic;
     }
 
 }
