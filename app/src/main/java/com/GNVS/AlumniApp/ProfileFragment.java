@@ -173,6 +173,7 @@ public class ProfileFragment extends Fragment {
                     if (data != null && data.getData() != null) {
                         Uri selectedImageUri = data.getData();
                         mImageCaptureUri = selectedImageUri;
+                        Log.i("Profile activity", "launchsomeactivity");
                         doCrop();
                     }
                 }
