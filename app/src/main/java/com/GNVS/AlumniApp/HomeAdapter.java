@@ -9,18 +9,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.GNVS.AlumniApp.CircleTransform;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
-    private ArrayList<PostList> posts;
+    private final ArrayList<PostList> posts;
     Context c;
-    private ItemClickListener itemClickListener;
+    private final ItemClickListener itemClickListener;
 
     public HomeAdapter(Context c, ArrayList<PostList> posts, ItemClickListener i) {
         this.posts = posts;
@@ -61,6 +65,20 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
                 }
             }
         });
+        FirebaseDatabase.getInstance().getReference().child("users").child(p.getUserId()).child("propic")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(!Objects.equals(snapshot.getValue(String.class), "")){
+                            Picasso.get().load(snapshot.getValue(String.class)).transform(new CircleTransform()).into(holder.profileicon);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
         holder.bind(p.getName(), p.getDescription(), p.getImage(), p.getLikeId().size(), p.getLikeId());
     }
 
@@ -71,7 +89,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
 
     protected static class HomeHolder extends RecyclerView.ViewHolder {
         TextView name, description, likeCount;
-        ImageView imageView, like, comment;
+        ImageView imageView, like, comment, profileicon;
         ItemClickListener i;
         public HomeHolder(@NonNull View itemView, ItemClickListener i) {
             super(itemView);
@@ -81,6 +99,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             imageView = itemView.findViewById(R.id.postImage);
             like = itemView.findViewById(R.id.likeBtn);
             comment = itemView.findViewById(R.id.commentBtn);
+            profileicon = itemView.findViewById(R.id.profileIcon);
             this.i = i;
             name.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -113,6 +132,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeHolder> {
             else{
                 imageView.setVisibility(View.GONE);
             }
+
         }
     }
 }

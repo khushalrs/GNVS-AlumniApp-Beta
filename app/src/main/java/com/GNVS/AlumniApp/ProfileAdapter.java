@@ -66,9 +66,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileH
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DatabaseReference r = FirebaseDatabase.getInstance().getReference("users").child(p.getUserId()).child("posts").child(p.getRef2());
+                    DatabaseReference r = FirebaseDatabase.getInstance().getReferenceFromUrl(p.getRef2());
                     r.removeValue();
-                    r = FirebaseDatabase.getInstance().getReference("posts").child(p.getRef1());
+                    r = FirebaseDatabase.getInstance().getReferenceFromUrl(p.getRef1());
                     r.removeValue();
                 }
             });

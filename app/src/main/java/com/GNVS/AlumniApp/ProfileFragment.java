@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import com.GNVS.AlumniApp.CircleTransform;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,6 +45,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
 
@@ -68,7 +71,7 @@ public class ProfileFragment extends Fragment {
     ArrayList<PostList> postList = new ArrayList<>();
     ArrayList<String>likeList = new ArrayList<>();
     ProfileAdapter profileAdapter;
-    String name, userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String name, userId=FirebaseAuth.getInstance().getUid();
     ImageButton signout;
     ImageView profilePic;
     TextView nameText, emailText, batchText, jobText, companyText;
@@ -173,7 +176,6 @@ public class ProfileFragment extends Fragment {
                     if (data != null && data.getData() != null) {
                         Uri selectedImageUri = data.getData();
                         mImageCaptureUri = selectedImageUri;
-                        Log.i("Profile activity", "launchsomeactivity");
                         doCrop();
                     }
                 }
@@ -183,7 +185,6 @@ public class ProfileFragment extends Fragment {
     ActivityResultLauncher<Intent> uCropActivityResult =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->{
                 if (result.getData() != null && result.getResultCode() == RESULT_OK) {
-                    Log.i("Profile pic upload", "True");
                     mImageCaptureUri = UCrop.getOutput(result.getData());
                     profilePic.setImageURI(mImageCaptureUri);
                     upload();
@@ -228,6 +229,7 @@ public class ProfileFragment extends Fragment {
         if(mImageCaptureUri!=null) {
             // adding listeners on upload
             // or failure of image
+            Log.i("Profile Activity", "True");
             ref.putFile(mImageCaptureUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -237,7 +239,7 @@ public class ProfileFragment extends Fragment {
                                 public void onSuccess(Uri uri) {
                                     downloadedImage = uri;
                                     Toast.makeText(context, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
-                                    users.child(userId).child("propic").setValue(downloadedImage);
+                                    users.child(userId).child("propic").setValue(downloadedImage.toString());
                                     progressDialog.dismiss();
                                 }
                             });
@@ -270,7 +272,7 @@ public class ProfileFragment extends Fragment {
                 companyText.setText(user.getCompany());
                 name = user.getName();
                 if(!Objects.equals(user.getPropic(), "")){
-                    Picasso.get().load(user.getPropic()).fit().centerCrop().into(profilePic);
+                    Picasso.get().load(user.getPropic()).transform(new CircleTransform()).into(profilePic);
 
                 }
             }
