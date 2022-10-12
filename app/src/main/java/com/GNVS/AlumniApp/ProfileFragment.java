@@ -71,7 +71,7 @@ public class ProfileFragment extends Fragment {
     ArrayList<PostList> postList = new ArrayList<>();
     ArrayList<String>likeList = new ArrayList<>();
     ProfileAdapter profileAdapter;
-    String name, userId=FirebaseAuth.getInstance().getUid();
+    String name, userId=FirebaseAuth.getInstance().getUid(), thisUser=FirebaseAuth.getInstance().getUid();
     ImageButton signout;
     ImageView profilePic;
     TextView nameText, emailText, batchText, jobText, companyText;
@@ -87,7 +87,7 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             userId = getArguments().getString("userId");
-            redirected = true;
+            redirected = !Objects.equals(thisUser, "hBVmq138IecWdstkYKcG0cgLwHp1");
         }
         queryData();
         postsData();
@@ -273,7 +273,6 @@ public class ProfileFragment extends Fragment {
                 name = user.getName();
                 if(!Objects.equals(user.getPropic(), "")){
                     Picasso.get().load(user.getPropic()).transform(new CircleTransform()).into(profilePic);
-
                 }
             }
             @Override

@@ -2,6 +2,8 @@ package com.GNVS.AlumniApp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,8 +11,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     ItemClickListener itemClickListener;
     View appbar;
     ImageButton search;
+    ImageView home;
     SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,17 @@ public class MainActivity extends AppCompatActivity {
         appbar = findViewById(R.id.appbar);
         search = appbar.findViewById(R.id.messageBtn);
         search.setImageResource(R.drawable.ic_baseline_search_24);
+        home = appbar.findViewById(R.id.appbarLogo);
+        home.setImageResource(R.drawable.ic_baseline_home_24);
+        TypedValue v = new TypedValue();
+        getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, v, true);
+        DrawableCompat.setTint(home.getDrawable(), ContextCompat.getColor(this, v.resourceId));
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                returnHome();
+            }
+        });
         sharedPreferences = getSharedPreferences("ThisUser", Context.MODE_PRIVATE);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,10 +79,15 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         chats = findViewById(R.id.chatRecycler);
-        mChatAdapter = new ChatAdapter(this, nameList, itemClickListener);
+        mChatAdapter = new ChatAdapter(this, nameList, userList, itemClickListener);
         chats.setLayoutManager(new LinearLayoutManager(this));
         chats.setAdapter(mChatAdapter);
         addUser();
+    }
+
+    public void returnHome(){
+        Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+        startActivity(intent);
     }
 
     public void addUser(){
@@ -101,5 +122,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void searchContacts(){
         startActivity(new Intent(MainActivity.this, SearchActivity.class));
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 }

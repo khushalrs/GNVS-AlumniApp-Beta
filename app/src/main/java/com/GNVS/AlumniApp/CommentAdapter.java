@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.GNVS.AlumniApp.CircleTransform;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,8 +14,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentHolder> {
     private ArrayList<Comments> comments;
@@ -38,8 +40,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
+                if(!Objects.equals(snapshot.getValue(String.class), "")) {
                     propic = snapshot.getValue(String.class);
+                    Picasso.get().load(propic).transform(new CircleTransform()).into(holder.pic);
                 }
             }
 
@@ -48,7 +51,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
 
             }
         });
-        holder.bind(c, propic);
+        holder.bind(c);
     }
 
     @Override
@@ -67,7 +70,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
             date = itemView.findViewById(R.id.commentDate);
             pic = itemView.findViewById(R.id.commentImage);
         }
-        public void bind(Comments c, String propic){
+        public void bind(Comments c){
             name.setText(c.getName());
             text.setText(c.getCommentText());
             date.setText(c.getDatetime());
