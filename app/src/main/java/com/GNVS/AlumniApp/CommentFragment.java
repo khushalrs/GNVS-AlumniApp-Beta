@@ -134,7 +134,7 @@ public class CommentFragment extends Fragment {
     }
 
     public void backPressed(){
-        getParentFragmentManager().popBackStack();
+        getParentFragmentManager().beginTransaction().replace(R.id.frame_layout, new HomeFragment()).commit();
     }
 
 }

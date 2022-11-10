@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder> {
     private ArrayList<PostList> postlist;
@@ -39,8 +41,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
     protected static class EventHolder extends RecyclerView.ViewHolder {
         TextView name, description, date, likeCount;
         ImageView imageView;
+        LinearLayout event_bottom;
         public EventHolder(@NonNull View itemView) {
             super(itemView);
+            event_bottom = itemView.findViewById(R.id.event_bottom);
+            event_bottom.setVisibility(View.GONE);
             name = itemView.findViewById(R.id.image_title);
             description = itemView.findViewById(R.id.postname);
             imageView = itemView.findViewById(R.id.postImage);
@@ -54,7 +59,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
             //likeCount.setText(lc);
             //Log.i("Image Url", img);
             //imageView.setImageResource(R.drawable.ic_baseline_send_24);
-            Picasso.get().load(img).into(imageView);
+            if(!Objects.equals(img, "")) {
+                Picasso.get().load(img).into(imageView);
+            }
         }
     }
 }

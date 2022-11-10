@@ -164,9 +164,11 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getImage(){
-        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        if (i.resolveActivity(getActivity().getPackageManager()) != null) {
-            launchSomeActivity.launch(i);
+        if(!redirected) {
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            if (i.resolveActivity(getActivity().getPackageManager()) != null) {
+                launchSomeActivity.launch(i);
+            }
         }
     }
     ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
